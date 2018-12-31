@@ -1,29 +1,35 @@
-import React from "react";
-import { Header, Dropdown, Image } from "semantic-ui-react";
+import React, { Component } from "react";
+import { Avatar, Dropdown, Menu } from "antd";
+import { Header /*Dropdown*/ } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 
-const trigger = (
-  <Header as="h3" style={{ padding: "15px 40px 0 0" }}>
-    <Image
-      circular
-      src="https://res.cloudinary.com/royquiroz/image/upload/v1541363947/Tfixeo/male.png"
-    />
-  </Header>
-);
+class userAvatar extends Component {
+  render() {
+    const user = JSON.parse(localStorage.getItem("user"));
 
-const Avatar = ({ signup }) => (
-  <Dropdown trigger={trigger} pointing="top" icon={null}>
-    <Dropdown.Menu>
-      <Dropdown.Item as={NavLink} exact to={"/profile"} text="Perfil" />
-      <Dropdown.Item
-        as={NavLink}
-        exact
-        to={"/"}
-        text="Cerrar Sesión"
-        onClick={signup}
-      />
-    </Dropdown.Menu>
-  </Dropdown>
-);
+    const menu = (
+      <Menu>
+        <Menu.Item>
+          <NavLink exact to="/profile">
+            Perfil
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item>
+          <NavLink onClick={this.props.signup} exact to="/">
+            Cerrar Sesión
+          </NavLink>
+        </Menu.Item>
+      </Menu>
+    );
 
-export default Avatar;
+    return (
+      <Header style={{ margin: "5px 50px 5px 10px" }}>
+        <Dropdown overlay={menu}>
+          {user === null ? null : <Avatar src={user.profile_pic} size={48} />}
+        </Dropdown>
+      </Header>
+    );
+  }
+}
+
+export default userAvatar;

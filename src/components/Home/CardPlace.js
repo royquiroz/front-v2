@@ -1,25 +1,25 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Carousel } from "antd";
 import { Card, Icon, Image } from "semantic-ui-react";
 
 const CardPlace = ({ place }) => (
-  <Card>
+  <Card as={Link} to={`/place/${place._id}`}>
     <Carousel effect="fade">
-      <Image
-        size="mini"
-        src="https://res.cloudinary.com/royquiroz/image/upload/v1545787539/spacio/eric-muhr-725953-unsplash.jpg"
-      />
-      <Image
-        size="mini"
-        src="https://res.cloudinary.com/royquiroz/image/upload/v1545786842/spacio/daniil-silantev-574966-unsplash.jpg"
-      />
+      {place.photos.map((photo, i) => (
+        <Image size="mini" key={i} src={photo} />
+      ))}
     </Carousel>
     <Card.Content>
       <Card.Header>{place.name}</Card.Header>
       <Card.Meta>
-        <span className="date">{`$${place.price}`}</span>
+        <span className="date">{`$${place.price}`} /noche</span>
       </Card.Meta>
-      <Card.Description>{place.description}</Card.Description>
+      <Card.Description>
+        {place.description.length > 200
+          ? `${place.description.substring(0, 200)}...`
+          : place.description}
+      </Card.Description>
     </Card.Content>
     <Card.Content extra>
       <span>

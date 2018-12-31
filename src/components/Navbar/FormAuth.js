@@ -43,6 +43,9 @@ class FormAuth extends Component {
       if (!res.error) {
         message.success(res.msg);
         this.props.closeModal();
+        setTimeout(function() {
+          window.location.reload();
+        }, 1000);
       } else {
         message.error(res.msg);
       }

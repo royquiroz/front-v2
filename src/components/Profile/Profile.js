@@ -1,13 +1,24 @@
 import React, { Component } from "react";
-import { message } from "antd";
-import { Container, Form, Button, Image } from "semantic-ui-react";
+import { message, Badge } from "antd";
+import {
+  Container,
+  Placeholder,
+  Form,
+  Icon,
+  Button,
+  Image,
+  Label
+} from "semantic-ui-react";
 import { profile } from "../../service";
+import Loading from "../Loading/Loading";
 
 class Profile extends Component {
   constructor() {
     super();
     this.state = {
-      user: {}
+      user: {},
+      loading: false,
+      show: false
     };
   }
 
@@ -24,19 +35,65 @@ class Profile extends Component {
     this.setState({ user });
   };
 
+  handleSelectedFile = e => {
+    const { user } = this.state;
+    user.profile_image = e.target.files[0];
+
+    this.setState({ user, show: true });
+  };
+
   handleSubmit = e => {
     e.preventDefault();
+    this.setState({ loading: true });
     profile(this.state.user).then(res => {
       message.success(res.msg);
+      setTimeout(function() {
+        window.location.reload();
+      }, 1000);
     });
   };
 
   render() {
-    let { user } = this.state;
+    let { user, loading, show } = this.state;
     return (
-      <Container style={{ paddingTop: "3%" }}>
-        <Image size="medium" src={user.profile_pic} centered />
+      <Container style={{ padding: "5% 2% 0 2%" }}>
+        <Loading loading={loading} />
+        {loading ? (
+          <Placeholder style={{ margin: "25px auto" }}>
+            <Placeholder.Image square />
+          </Placeholder>
+        ) : (
+          <Image
+            size="medium"
+            src={user.profile_pic}
+            rounded
+            centered
+            style={{ paddingBottom: "20px" }}
+          />
+        )}
         <Form onSubmit={this.handleSubmit}>
+          <Container textAlign="center">
+            <Badge dot={show}>
+              <Label
+                width="4"
+                as="label"
+                htmlFor="file"
+                basic
+                size="large"
+                style={{ cursor: "pointer" }}
+              >
+                <Icon name="paperclip" />
+                Imagen
+              </Label>
+              <input
+                id="file"
+                name="profile_pic"
+                type="file"
+                hidden
+                onChange={this.handleSelectedFile}
+              />
+            </Badge>
+          </Container>
           <Form.Field>
             <label>Nombre</label>
             <input
@@ -80,7 +137,9 @@ class Profile extends Component {
             defaultValue={user.description}
             onChange={this.handleChange}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" primary>
+            Guardar
+          </Button>
         </Form>
       </Container>
     );

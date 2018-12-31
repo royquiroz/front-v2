@@ -6,7 +6,7 @@ const base_url =
     : "https://spacio.herokuapp.com/api";
 
 const headers = {
-  "Content-Type": "application/json",
+  "Content-Type": "multipart/form-data",
   "x-access-token": localStorage.getItem("token")
 };
 
@@ -47,8 +47,20 @@ export const login = auth => {
 };
 
 export const profile = user => {
+  let formData;
+
+  if (!user.profile_image) {
+    formData = user;
+    headers["Content-Type"] = "application/json";
+  } else {
+    formData = new FormData();
+    Object.keys(user).forEach(key => {
+      formData.append(key, user[key]);
+    });
+  }
+
   return axios
-    .patch(`${base_url}/auth/${user._id}`, user, { headers })
+    .patch(`${base_url}/auth/${user._id}`, formData, { headers })
     .then(res => {
       localStorage.setItem("user", JSON.stringify(res.data.user));
       return {
@@ -64,13 +76,56 @@ export const profile = user => {
     });
 };
 
-export const place = () => {
+export const places = () => {
   return axios
     .get(`${base_url}/place`)
     .then(res => {
-      console.log(res);
-
       return res.data.places;
+    })
+    .catch(err => {
+      return {
+        error: err.response.status,
+        msg: err.response.data.msg
+      };
+    });
+};
+
+export const newPlace = place => {
+  let formData = new FormData();
+  if (place.photos) {
+    for (let file of place.photos) {
+      formData.append("photos", file);
+    }
+    delete place.photos;
+  }
+  for (let k in place) {
+    formData.append(k, place[k]);
+  }
+
+  return axios
+    .post(`${base_url}/place`, formData, { headers })
+    .then(res => {
+      return {
+        place: res.data.place,
+        msg: res.data.msg
+      };
+    })
+    .catch(err => {
+      return {
+        error: err.response.status,
+        msg: err.response.data.msg
+      };
+    });
+};
+
+export const place = id => {
+  return axios
+    .get(`${base_url}/place/${id}`)
+    .then(res => {
+      return {
+        place: res.data.place,
+        msg: res.data.msg
+      };
     })
     .catch(err => {
       return {

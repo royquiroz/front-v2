@@ -1,17 +1,25 @@
 import React, { Component } from "react";
 import { message } from "antd";
 import { Menu, Button } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import Modals from "./Modal";
 import Avatar from "./Avatar";
+import logo from "../../logo.svg";
 
 class Navbar extends Component {
   constructor() {
     super();
     this.state = {
-      activeItem: "home",
+      user: {},
+      activeItem: "",
       selectButton: "",
       open: false
     };
+  }
+
+  componentWillMount() {
+    if (localStorage.getItem("user"))
+      this.setState({ user: JSON.parse(localStorage.getItem("user")) });
   }
 
   signup = e => {
@@ -28,23 +36,21 @@ class Navbar extends Component {
   closeModal = () => this.setState({ open: false });
 
   render() {
-    const { activeItem, selectButton, open } = this.state;
+    const { user, selectButton, open } = this.state;
 
     return (
       <div>
-        <Menu size="large" inverted borderless stackable>
-          <Menu.Item>
-            <img src="../../logo.svg" alt="logo" />
+        <Menu size="large" borderless fixed="top">
+          <Menu.Item as={Link} to={"/"}>
+            <img src={logo} alt="logo" />
           </Menu.Item>
-          <Menu.Item
-            name="home"
-            active={activeItem === "home"}
-            onClick={this.handleItemClick}
-          />
+          {/*<Menu.Item as={Link} name="home" to={"/"} />*/}
 
           {localStorage.getItem("token") ? (
             <Menu.Menu position="right">
-              {" "}
+              {user.role === "LESSOR" ? (
+                <Menu.Item as={Link} name="Registra tu espacio" to={"/place"} />
+              ) : null}
               <Avatar signup={this.signup} />{" "}
             </Menu.Menu>
           ) : (

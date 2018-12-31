@@ -5,11 +5,23 @@ import Router from "./Router";
 import Navbar from "./components/Navbar/Navbar";
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      user: {}
+    };
+  }
+
+  componentWillMount() {
+    if (localStorage.getItem("user"))
+      this.setState({ user: JSON.parse(localStorage.getItem("user")) });
+  }
+
   render() {
     return (
       <div>
         <Navbar />
-        <Router />
+        <Router role={this.state.user.role} />
       </div>
     );
   }
