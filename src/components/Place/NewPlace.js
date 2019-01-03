@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { message } from "antd";
+import { message, Badge } from "antd";
 import { Container, Form, Button, Label, Icon } from "semantic-ui-react";
 import { newPlace } from "../../service";
 
@@ -17,7 +17,8 @@ class Place extends Component {
         { value: "STORAGE", text: "Almacenamiento" },
         { value: "ACOOMMODATION", text: "Alojamiento" }
       ],
-      form: {}
+      form: {},
+      countImages: 0
     };
   }
 
@@ -50,9 +51,9 @@ class Place extends Component {
   handleSelectedFile = e => {
     const { form } = this.state;
     form.photos = e.target.files;
-    console.log(form);
+    console.log(form, form.photos.length);
 
-    this.setState({ form });
+    this.setState({ form, countImages: form.photos.length });
   };
 
   handleSubmit = e => {
@@ -64,7 +65,7 @@ class Place extends Component {
   };
 
   render() {
-    let { optionType, optionSize } = this.state;
+    let { optionType, optionSize, countImages } = this.state;
     return (
       <Container style={{ padding: "5% 2% 0 2%" }}>
         <Form onSubmit={this.handleSubmit}>
@@ -105,25 +106,29 @@ class Place extends Component {
             placeholder="Describe tu propiedad"
             onChange={this.handleChange}
           />
-          <Button type="submit">Submit</Button>
-          <Label
-            as="label"
-            basic
-            color="red"
-            size="large"
-            htmlFor="upload"
-            style={{ cursor: "pointer" }}
-          >
-            <Icon name="upload" /> Fotos
-            <input
-              hidden
-              id="upload"
-              name="photos"
-              type="file"
-              multiple
-              onChange={this.handleSelectedFile}
-            />
-          </Label>
+          <Button type="submit" primary>
+            Guardar
+          </Button>
+          <Badge count={countImages}>
+            <Label
+              as="label"
+              basic
+              color="green"
+              size="large"
+              htmlFor="upload"
+              style={{ cursor: "pointer" }}
+            >
+              <Icon name="upload" /> Fotos
+              <input
+                hidden
+                id="upload"
+                name="photos"
+                type="file"
+                multiple
+                onChange={this.handleSelectedFile}
+              />
+            </Label>
+          </Badge>
         </Form>
       </Container>
     );

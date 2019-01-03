@@ -134,3 +134,39 @@ export const place = id => {
       };
     });
 };
+
+export const review = review => {
+  return axios
+    .post(`${base_url}/review`, review)
+    .then(res => {
+      return {
+        place: res.data.place,
+        msg: res.data.msg
+      };
+    })
+    .catch(err => {
+      return {
+        error: err.response.status,
+        msg: err.response.data.msg
+      };
+    });
+};
+
+export const rent = rent => {
+  return axios
+    .post(`${base_url}/rent`, rent)
+    .then(res => {
+      console.log(res);
+
+      return {
+        place: res.data.place,
+        msg: res.data.msg
+      };
+    })
+    .catch(err => {
+      return {
+        error: err.response.status,
+        msg: err.response.data.msg
+      };
+    });
+};

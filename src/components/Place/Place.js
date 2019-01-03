@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { DatePicker, Carousel } from "antd";
+import { Carousel } from "antd";
 import {
-  Button,
+  Comment,
   Image,
   Divider,
   Header,
@@ -14,9 +14,9 @@ import {
 import { place } from "../../service";
 import Loading from "../Loading/Loading";
 import Map from "../Map/Map";
-import Reviews from "./Reviews";
-
-const { RangePicker } = DatePicker;
+import FormReviews from "./FormReviews";
+import Review from "./Review";
+import Rent from "./Rent";
 
 class Place extends Component {
   constructor() {
@@ -24,6 +24,7 @@ class Place extends Component {
     this.state = {
       place: {},
       user: {},
+      average: "",
       loading: true
     };
   }
@@ -39,8 +40,8 @@ class Place extends Component {
   }
 
   render() {
-    let { place, loading, user } = this.state;
-    console.log(place);
+    let { place, loading, user, average } = this.state;
+    console.log(place, average);
 
     return (
       <div>
@@ -93,16 +94,7 @@ class Place extends Component {
                       {place.lessor.name} {place.lessor.last_name}
                     </Header>
                     {user._id !== place.lessor._id ? (
-                      <Segment textAlign="left" style={{ marginTop: "25px" }}>
-                        <RangePicker placeholder={["Llegada", "Salida"]} />
-                        <Button
-                          size="small"
-                          color="google plus"
-                          style={{ marginLeft: "25px" }}
-                        >
-                          <Icon name="travel" /> Reservar
-                        </Button>
-                      </Segment>
+                      <Rent place={place} user={user} />
                     ) : null}
                   </Grid.Column>
                 </Grid>
@@ -128,7 +120,14 @@ class Place extends Component {
                   Comentarios
                 </Header>
               </Divider>
-              {user._id !== place.lessor._id ? <Reviews /> : null}
+              {user._id !== place.lessor._id ? (
+                <FormReviews user={user} place={place} />
+              ) : null}
+              <Comment.Group size="large">
+                {place.reviews.map((review, i) => (
+                  <Review key={i} review={review} />
+                ))}
+              </Comment.Group>
             </Container>
           </div>
         ) : null}

@@ -8,6 +8,7 @@ class Home extends Component {
   constructor() {
     super();
     this.state = {
+      user: JSON.parse(localStorage.getItem("user")),
       places: [],
       loading: true
     };
@@ -15,20 +16,21 @@ class Home extends Component {
 
   componentWillMount() {
     places().then(res => {
-      this.setState({ places: res, loading: false });
+      console.log(res);
+      const places = res.filter(p => p.lessor === this.state.user._id);
+      this.setState({ places: places, loading: false });
     });
   }
 
   render() {
     const { places, loading } = this.state;
-    console.log(places);
 
     return (
       <Container fluid style={{ padding: "5% 2% 0 2%" }}>
         <Loading loading={loading} />
         {!loading ? (
           <div>
-            <h1>Hola Home</h1>
+            <h1>Mis Espacios</h1>
             <Card.Group>
               {places.map((place, i) => (
                 <CardPlace key={i} place={place} />

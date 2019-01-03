@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Carousel } from "antd";
-import { Card, Icon, Image } from "semantic-ui-react";
+import { Card, Image } from "semantic-ui-react";
 
 const CardPlace = ({ place }) => (
   <Card as={Link} to={`/place/${place._id}`}>
@@ -20,12 +20,6 @@ const CardPlace = ({ place }) => (
           ? `${place.description.substring(0, 200)}...`
           : place.description}
       </Card.Description>
-    </Card.Content>
-    <Card.Content extra>
-      <span>
-        <Icon name="user" />
-        22 Friends
-      </span>
     </Card.Content>
   </Card>
 );

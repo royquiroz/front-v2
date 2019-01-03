@@ -4,6 +4,7 @@ import Home from "./components/Home/Home";
 import Profile from "./components/Profile/Profile";
 import NewPlace from "./components/Place/NewPlace";
 import Place from "./components/Place/Place";
+import Places from "./components/Profile/Places";
 
 const Router = ({ role }) => (
   <Switch>
@@ -17,6 +18,7 @@ const Router = ({ role }) => (
       }
     />
     <Route exact path="/place/:id" render={props => <Place {...props} />} />
+    <Route exact path="/places" component={Places} />
   </Switch>
 );
 
