@@ -16,7 +16,6 @@ class Home extends Component {
 
   componentWillMount() {
     places().then(res => {
-      console.log(res);
       const places = res.filter(p => p.lessor === this.state.user._id);
       this.setState({ places: places, loading: false });
     });

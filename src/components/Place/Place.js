@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Carousel } from "antd";
+import { Carousel, Rate } from "antd";
 import {
   Comment,
   Image,
@@ -35,13 +35,17 @@ class Place extends Component {
       this.setState({ user: user });
     }
     place(this.props.match.params.id).then(res => {
-      this.setState({ place: res.place, loading: false });
+      let average = res.place.reviews.reduce((acc, review) => {
+        return acc + review.raiting;
+      }, 0);
+
+      this.setState({ place: res.place, average: average, loading: false });
     });
   }
 
   render() {
     let { place, loading, user, average } = this.state;
-    console.log(place, average);
+    console.log(place);
 
     return (
       <div>
@@ -72,10 +76,26 @@ class Place extends Component {
                     >
                       Distrito Federal
                     </Header>
-                    <Label color="teal" tag style={{ marginTop: "25px" }}>
+                    <div>
+                      <Rate value={average / place.reviews.length} disabled /> (
+                      {place.reviews.length}{" "}
+                      {place.reviews.length === 1
+                        ? "calificacion"
+                        : "calificaciones"}
+                      )
+                    </div>
+                    <Label
+                      color="teal"
+                      tag
+                      style={{ margin: "15px 10px 0px 10px" }}
+                    >
                       {place.type}
                     </Label>{" "}
-                    <Label color="brown" tag style={{ marginTop: "25px" }}>
+                    <Label
+                      color="brown"
+                      tag
+                      style={{ margin: "15px 10px 0px 10px" }}
+                    >
                       {place.size}
                     </Label>
                   </Grid.Column>
@@ -93,9 +113,11 @@ class Place extends Component {
                     >
                       {place.lessor.name} {place.lessor.last_name}
                     </Header>
-                    {user._id !== place.lessor._id ? (
+                    {user._id === place.lessor._id ||
+                    user.role === "LESSOR" ||
+                    Object.keys(user).length === 0 ? null : (
                       <Rent place={place} user={user} />
-                    ) : null}
+                    )}
                   </Grid.Column>
                 </Grid>
                 <Divider vertical hidden />
@@ -120,9 +142,11 @@ class Place extends Component {
                   Comentarios
                 </Header>
               </Divider>
-              {user._id !== place.lessor._id ? (
+              {user._id === place.lessor._id ||
+              user.role === "LESSOR" ||
+              Object.keys(user).length === 0 ? null : (
                 <FormReviews user={user} place={place} />
-              ) : null}
+              )}
               <Comment.Group size="large">
                 {place.reviews.map((review, i) => (
                   <Review key={i} review={review} />

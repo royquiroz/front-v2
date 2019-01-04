@@ -101,7 +101,7 @@ class Place extends Component {
             />
           </Form.Group>
           <Form.TextArea
-            label="Acerca de ti"
+            label="Acerca de tu espacio"
             name="description"
             placeholder="Describe tu propiedad"
             onChange={this.handleChange}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { message } from "antd";
+import { Switch, message } from "antd";
 import { Button, Form, Input } from "semantic-ui-react";
 import { register, login } from "../../service";
 
@@ -12,10 +12,18 @@ class FormAuth extends Component {
         last_name: "",
         email: "",
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
+        role: ""
       }
     };
   }
+
+  selectRole = e => {
+    let { user } = this.state;
+    e ? (user.role = "LESSOR") : (user.role = "CLIENT");
+
+    this.setState({ user });
+  };
 
   handleChange = e => {
     const { user } = this.state;
@@ -114,6 +122,12 @@ class FormAuth extends Component {
               placeholder="Confirmar Password"
               onChange={this.handleChange}
             />
+          </Form.Field>
+        ) : null}
+        {type === "Registrarse" ? (
+          <Form.Field>
+            <Switch name="role" value="LESSOR" onChange={this.selectRole} />{" "}
+            ¿Quieres rentar algun espacio?
           </Form.Field>
         ) : null}
         <Button color="blue" type="submit">

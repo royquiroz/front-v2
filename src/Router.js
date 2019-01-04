@@ -18,7 +18,13 @@ const Router = ({ role }) => (
       }
     />
     <Route exact path="/place/:id" render={props => <Place {...props} />} />
-    <Route exact path="/places" component={Places} />
+    <Route
+      exact
+      path="/places"
+      render={props =>
+        role === "LESSOR" ? <Places {...props} /> : <Redirect to="/" />
+      }
+    />
   </Switch>
 );
 
