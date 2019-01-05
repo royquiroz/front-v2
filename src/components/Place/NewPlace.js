@@ -26,7 +26,7 @@ class Place extends Component {
     const { form } = this.state;
     let user = JSON.parse(localStorage.getItem("user"));
 
-    form.lessee = user._id;
+    form.lessor = user._id;
     console.log(form);
     this.setState({ user: user });
   }

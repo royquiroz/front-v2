@@ -14,6 +14,11 @@ class userAvatar extends Component {
             Perfil
           </NavLink>
         </Menu.Item>
+        <Menu.Item>
+          <NavLink exact to="/messages">
+            Mensajes
+          </NavLink>
+        </Menu.Item>
         {user.role === "LESSOR" ? (
           <Menu.Item>
             <NavLink exact to="/places">

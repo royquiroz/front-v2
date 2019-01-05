@@ -44,6 +44,8 @@ class Profile extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    console.log(this.state.user);
+
     this.setState({ loading: true });
     profile(this.state.user).then(res => {
       message.success(res.msg);

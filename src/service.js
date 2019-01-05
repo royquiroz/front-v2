@@ -58,7 +58,7 @@ export const profile = user => {
       formData.append(key, user[key]);
     });
   }
-
+  console.log(formData);
   return axios
     .patch(`${base_url}/auth/${user._id}`, formData, { headers })
     .then(res => {
@@ -156,10 +156,42 @@ export const rent = rent => {
   return axios
     .post(`${base_url}/rent`, rent)
     .then(res => {
-      console.log(res);
-
       return {
         place: res.data.place,
+        msg: res.data.msg
+      };
+    })
+    .catch(err => {
+      return {
+        error: err.response.status,
+        msg: err.response.data.msg
+      };
+    });
+};
+
+export const sentMessages = id => {
+  return axios
+    .get(`${base_url}/message/sender/${id}`)
+    .then(res => {
+      return {
+        messages: res.data.messages,
+        msg: res.data.msg
+      };
+    })
+    .catch(err => {
+      return {
+        error: err.response.status,
+        msg: err.response.data.msg
+      };
+    });
+};
+
+export const receivedMessages = id => {
+  return axios
+    .get(`${base_url}/message/addressee/${id}`)
+    .then(res => {
+      return {
+        messages: res.data.messages,
         msg: res.data.msg
       };
     })

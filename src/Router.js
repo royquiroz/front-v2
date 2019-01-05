@@ -5,6 +5,7 @@ import Profile from "./components/Profile/Profile";
 import NewPlace from "./components/Place/NewPlace";
 import Place from "./components/Place/Place";
 import Places from "./components/Profile/Places";
+import Mailbox from "./components/Mailbox/Mailbox";
 
 const Router = ({ role }) => (
   <Switch>
@@ -25,6 +26,7 @@ const Router = ({ role }) => (
         role === "LESSOR" ? <Places {...props} /> : <Redirect to="/" />
       }
     />
+    <Route exact path="/messages" component={Mailbox} />
   </Switch>
 );
 
