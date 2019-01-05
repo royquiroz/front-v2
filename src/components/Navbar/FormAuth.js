@@ -13,7 +13,7 @@ class FormAuth extends Component {
         email: "",
         password: "",
         confirmPassword: "",
-        role: ""
+        role: "CLIENT"
       }
     };
   }

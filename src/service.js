@@ -156,8 +156,10 @@ export const rent = rent => {
   return axios
     .post(`${base_url}/rent`, rent)
     .then(res => {
+      let rent = res.data.rent;
+      rent.lessor = res.data.place.lessor;
       return {
-        place: res.data.place,
+        rent: rent,
         msg: res.data.msg
       };
     })
@@ -192,6 +194,22 @@ export const receivedMessages = id => {
     .then(res => {
       return {
         messages: res.data.messages,
+        msg: res.data.msg
+      };
+    })
+    .catch(err => {
+      return {
+        error: err.response.status,
+        msg: err.response.data.msg
+      };
+    });
+};
+
+export const messageRent = msg => {
+  return axios
+    .post(`${base_url}/message/`, msg)
+    .then(res => {
+      return {
         msg: res.data.msg
       };
     })

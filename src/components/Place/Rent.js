@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { DatePicker, message } from "antd";
 import { Segment, Button, Icon } from "semantic-ui-react";
-import { rent } from "../../service";
+import { rent, messageRent } from "../../service";
 
 const { RangePicker } = DatePicker;
 
@@ -30,6 +30,15 @@ class Rent extends Component {
     e.preventDefault();
 
     rent(this.state.rent).then(res => {
+      let msg = {
+        sender: res.rent.lessor,
+        addressee: res.rent.lessee,
+        title: "Solicitud de renta de espacio",
+        comment: ""
+      };
+      messageRent(msg).then(res => {
+        message.success(res.msg);
+      });
       message.success(res.msg);
     });
   };

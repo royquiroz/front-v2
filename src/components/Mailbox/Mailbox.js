@@ -27,6 +27,8 @@ class Mailbox extends Component {
   }
 
   handleCheck = msg => {
+    console.log(msg);
+
     this.setState({ msg: msg });
   };
 
@@ -54,26 +56,21 @@ class Mailbox extends Component {
                     ))}
                   </List>
                 </div>
-                {addressee.length < 0 ? (
-                  <div>
-                    <h3>Enviados</h3>
-                    <List divided selection verticalAlign="middle">
-                      {addressee.map((msg, i) => (
-                        <List.Item
-                          key={i}
-                          onClick={() => this.handleCheck(msg.comment)}
-                        >
-                          <Image avatar src={msg.sent.profile_pic} />
-                          <List.Content>
-                            <List.Header>
-                              {msg.sent.name} {msg.sent.last_name}
-                            </List.Header>
-                          </List.Content>
-                        </List.Item>
-                      ))}
-                    </List>
-                  </div>
-                ) : null}
+                <div>
+                  <h3>Enviados {addressee.length}</h3>
+                  <List divided selection verticalAlign="middle">
+                    {addressee.map((msg, i) => (
+                      <List.Item key={i} onClick={() => this.handleCheck(msg)}>
+                        <Image avatar src={msg.sender.profile_pic} />
+                        <List.Content>
+                          <List.Header>
+                            {msg.sender.name} {msg.sender.last_name}
+                          </List.Header>
+                        </List.Content>
+                      </List.Item>
+                    ))}
+                  </List>
+                </div>
               </Segment>
             </Grid.Column>
             <Grid.Column width="12">
