@@ -27,14 +27,12 @@ class Place extends Component {
     let user = JSON.parse(localStorage.getItem("user"));
 
     form.lessor = user._id;
-    console.log(form);
     this.setState({ user: user });
   }
 
   handleDropdownChange = (e, { value, name }) => {
     const { form } = this.state;
     form[name] = value;
-    console.log(form);
 
     this.setState({ form });
   };
@@ -43,7 +41,6 @@ class Place extends Component {
     const { form } = this.state;
     let field = e.target.name;
     form[field] = e.target.value;
-    console.log(form);
 
     this.setState({ form });
   };
@@ -51,7 +48,6 @@ class Place extends Component {
   handleSelectedFile = e => {
     const { form } = this.state;
     form.photos = e.target.files;
-    console.log(form, form.photos.length);
 
     this.setState({ form, countImages: form.photos.length });
   };

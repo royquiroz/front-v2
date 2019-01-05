@@ -33,7 +33,6 @@ class FormReviews extends Component {
       let field = e.target.name;
       review[field] = e.target.value;
     }
-    console.log(review);
 
     this.setState({ review });
   };

@@ -4,7 +4,7 @@ import { Menu, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import Modals from "./Modal";
 import Avatar from "./Avatar";
-import logo from "../../logo.svg";
+import logo from "../../spacio.png";
 
 class Navbar extends Component {
   constructor() {
@@ -60,8 +60,8 @@ class Navbar extends Component {
                   name="Iniciar Sesión"
                   content="Iniciar Sesión"
                   size="tiny"
-                  color="green"
                   onClick={this.handleModal}
+                  basic
                 />
               </Menu.Item>
               <Menu.Item>
@@ -69,8 +69,8 @@ class Navbar extends Component {
                   name="Registrarse"
                   content="Registrarse"
                   size="tiny"
-                  color="grey"
                   onClick={this.handleModal}
+                  basic
                 />
               </Menu.Item>
             </Menu.Menu>

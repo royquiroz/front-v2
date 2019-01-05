@@ -58,7 +58,6 @@ export const profile = user => {
       formData.append(key, user[key]);
     });
   }
-  console.log(formData);
   return axios
     .patch(`${base_url}/auth/${user._id}`, formData, { headers })
     .then(res => {

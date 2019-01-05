@@ -27,8 +27,6 @@ class Mailbox extends Component {
   }
 
   handleCheck = msg => {
-    console.log(msg);
-
     this.setState({ msg: msg });
   };
 

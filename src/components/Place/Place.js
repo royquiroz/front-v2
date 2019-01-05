@@ -45,7 +45,6 @@ class Place extends Component {
 
   render() {
     let { place, loading, user, average } = this.state;
-    console.log(place);
 
     return (
       <div>
@@ -70,12 +69,12 @@ class Place extends Component {
                     >
                       ${place.price} por dia/noche
                     </Header>
-                    <Header
+                    {/*<Header
                       as="h5"
                       style={{ color: "#bdbdbd", marginTop: "0" }}
                     >
                       Distrito Federal
-                    </Header>
+                    </Header>*/}
                     <div>
                       <Rate value={average / place.reviews.length} disabled /> (
                       {place.reviews.length}{" "}
@@ -135,7 +134,7 @@ class Place extends Component {
                   Ubicación
                 </Header>
               </Divider>
-              <Map name={place.name} />
+              <Map name={place.name} lat={place.lat} lng={place.lng} />
               <Divider horizontal>
                 <Header as="h4">
                   <Icon name="comments" />
