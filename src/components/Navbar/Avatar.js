@@ -26,6 +26,13 @@ class userAvatar extends Component {
             </NavLink>
           </Menu.Item>
         ) : null}
+        {user.role === "CLIENT" ? (
+          <Menu.Item>
+            <NavLink exact to="/favorites">
+              Favoritos
+            </NavLink>
+          </Menu.Item>
+        ) : null}
         <Menu.Item>
           <NavLink onClick={this.props.signup} exact to="/">
             Cerrar Sesión

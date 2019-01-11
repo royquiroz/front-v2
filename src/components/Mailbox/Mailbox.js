@@ -31,13 +31,12 @@ class Mailbox extends Component {
   };
 
   render() {
-    let { sent, addressee, msg } = this.state;
+    let { sent, /*addressee,*/ msg } = this.state;
     return (
       <Container fluid style={{ padding: "5% 2% 0 2%" }}>
         <Grid.Column>
           <Grid celled="internally">
             <Grid.Column width="4">
-              List
               <Segment style={{ overflowY: "auto", height: "500px" }}>
                 <div>
                   <h3>Recibidos {sent.length}</h3>
@@ -54,7 +53,7 @@ class Mailbox extends Component {
                     ))}
                   </List>
                 </div>
-                <div>
+                {/*<div>
                   <h3>Enviados {addressee.length}</h3>
                   <List divided selection verticalAlign="middle">
                     {addressee.map((msg, i) => (
@@ -68,11 +67,10 @@ class Mailbox extends Component {
                       </List.Item>
                     ))}
                   </List>
-                </div>
+                    </div>*/}
               </Segment>
             </Grid.Column>
             <Grid.Column width="12">
-              Messages
               {Object.keys(msg).length === 0 ? null : <MessageUser msg={msg} />}
             </Grid.Column>
           </Grid>

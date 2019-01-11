@@ -4,7 +4,7 @@ import { Menu, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import Modals from "./Modal";
 import Avatar from "./Avatar";
-import logo from "../../spacio.png";
+import logo from "../../logo_min.svg";
 
 class Navbar extends Component {
   constructor() {
@@ -42,7 +42,7 @@ class Navbar extends Component {
       <div>
         <Menu size="large" borderless fixed="top">
           <Menu.Item as={Link} to={"/"}>
-            <img src={logo} alt="logo" />
+            <img src={logo} alt="logo_min" />
           </Menu.Item>
           {/*<Menu.Item as={Link} name="home" to={"/"} />*/}
 

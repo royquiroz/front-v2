@@ -46,6 +46,24 @@ export const login = auth => {
     });
 };
 
+export const watchProfile = userId => {
+  return axios
+    .get(`${base_url}/auth/${userId}`, { headers })
+    .then(res => {
+      return {
+        error: false,
+        favorites: res.data.user.favorites,
+        msg: res.data.msg
+      };
+    })
+    .catch(err => {
+      return {
+        error: err.response.status,
+        msg: err.response.data.msg
+      };
+    });
+};
+
 export const profile = user => {
   let formData;
 
