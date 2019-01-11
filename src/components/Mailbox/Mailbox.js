@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, Segment, Grid, List, Image } from "semantic-ui-react";
 import MessageUser from "./Message";
-import { sentMessages, receivedMessages } from "../../service";
+import { sentMessages /*, receivedMessages*/ } from "../../service";
 
 class Mailbox extends Component {
   constructor() {
@@ -19,9 +19,9 @@ class Mailbox extends Component {
     sentMessages(user._id).then(res => {
       this.setState({ sent: res.messages });
     });
-    receivedMessages(user._id).then(res => {
+    /*receivedMessages(user._id).then(res => {
       this.setState({ addressee: res.messages });
-    });
+    });*/
 
     this.setState({ user: user });
   }
@@ -32,6 +32,8 @@ class Mailbox extends Component {
 
   render() {
     let { sent, /*addressee,*/ msg } = this.state;
+    console.log(sent);
+
     return (
       <Container fluid style={{ padding: "5% 2% 0 2%" }}>
         <Grid.Column>

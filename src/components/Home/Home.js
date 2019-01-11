@@ -45,7 +45,7 @@ class Home extends Component {
               src="https://res.cloudinary.com/royquiroz/image/upload/v1547178022/spacio/storage2.png"
               style={{ width: "100%", height: "750px" }}
             />
-            <Container fluid style={{ padding: "5% 8%" }}>
+            <Container fluid style={{ padding: "5% 7%" }}>
               <Card.Group>
                 {places.map((place, i) => (
                   <CardPlace key={i} place={place} />
